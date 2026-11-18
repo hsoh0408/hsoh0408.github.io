@@ -16,7 +16,7 @@ import { siteData } from "../data"
 import { isExperienceModalHash } from "./ExperienceModal"
 import { preloadWorkImagesWhenIdle } from "../preloadWorkImages"
 import { CursorConfetti } from "./CursorConfetti"
-import { NavigationLinks, ResumeLink } from "./SiteNavigation"
+import { DocumentLinks, NavigationLinks } from "./SiteNavigation"
 import { HOME_PATH } from "../paths"
 
 export type RootOutletContext = {
@@ -300,7 +300,7 @@ export function RootLayout() {
               className={`desktop-nav ${menuOpen ? "is-open" : ""}`}
               activeItem={activeNavigationItem}
             />
-            <ResumeLink />
+            <DocumentLinks />
             <button
               className="menu-button"
               type="button"
@@ -345,7 +345,7 @@ export function RootLayout() {
             >
               {siteData.person.linkedin.label}
             </a>
-            <ResumeLink />
+            <DocumentLinks />
           </div>
         </div>
         <div className="footer-meta">{siteData.footer.copyright}</div>

@@ -21,6 +21,14 @@ so they resolve under the Vite base path (`/`):
 - `public/images/profile-cutout.png` — profile photo
 - `public/Hazel-Oh-Resume.pdf` — resume
 
+## Gensler version
+
+`npm run build` also builds a Gensler-only copy of the site into
+`dist/gensler/`, served at https://hsoh0408.github.io/gensler/. It is the same
+site plus a Cover Letter button on the landing page and next to every Resume
+button. The cover letter lives in `variants/gensler/` so it never ships with
+the main site. Run it locally with `npm run dev:gensler`.
+
 ## Deploy
 
 Every push to `main` runs `.github/workflows/deploy.yml`, which builds the site

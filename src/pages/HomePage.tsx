@@ -5,7 +5,7 @@ import { ExperienceTimeline } from "../components/ExperienceTimeline"
 import { ProjectCard } from "../components/ProjectCard"
 import { Reveal } from "../components/Reveal"
 import { RotatingRoles } from "../components/RotatingRoles"
-import { NavigationLinks, ResumeLink } from "../components/SiteNavigation"
+import { DocumentLinks, NavigationLinks } from "../components/SiteNavigation"
 import type { RootOutletContext } from "../components/RootLayout"
 import { siteData } from "../data"
 import heroPhoto from "../assets/profile-headshot.jpg?w=180;360;540;720&format=webp&quality=82&as=img"
@@ -70,7 +70,7 @@ export function HomePage() {
               className="hero-navigation-links"
               activeItem={activeNavigationItem}
             />
-            <ResumeLink className="hero-resume" />
+            <DocumentLinks className="hero-resume" />
           </div>
         </div>
         <div className="intro-layout">

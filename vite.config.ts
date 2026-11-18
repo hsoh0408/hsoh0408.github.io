@@ -5,15 +5,22 @@ import { imagetools } from "vite-imagetools"
 import fs from "node:fs"
 import path from "node:path"
 
-// The site is served from https://hsoh0408.github.io/ (a GitHub user site)
+// The site is served from https://hsoh0408.github.io/ (a GitHub user site).
+// The Gensler build (`--mode gensler`) is served from /gensler/ and also ships
+// the Gensler cover letter.
 const BASE_PATH = "/"
+const GENSLER_BASE_PATH = "/gensler/"
+const GENSLER_FILES = ["variants/gensler/Gensler_CoverLetter.pdf"]
 
 // Responsive widths generated for project images (never upscaled).
 const PROJECT_IMAGE_WIDTHS = [480, 800, 1200, 1600]
 
 // Vite config — https://vitejs.dev/config/
-export default defineConfig({
-  base: BASE_PATH,
+export default defineConfig(({ mode }) => {
+  const isGensler = mode === "gensler"
+  return {
+  base: isGensler ? GENSLER_BASE_PATH : BASE_PATH,
+  build: isGensler ? { outDir: "dist/gensler" } : {},
   plugins: [
     react(),
     tailwindcss(),
@@ -38,13 +45,37 @@ export default defineConfig({
       },
     }),
     spaFallback(),
+    isGensler && variantFiles(GENSLER_FILES),
   ],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "./src"),
     },
   },
+  }
 })
+
+/** Serves (dev) and emits (build) variant-only files at the site root. */
+function variantFiles(files: string[]): Plugin {
+  const byName = new Map(files.map((file) => [path.basename(file), file]))
+  return {
+    name: "variant-files",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const name = decodeURIComponent((req.url ?? "").split("?")[0]).split("/").pop()
+        const file = name && byName.get(name)
+        if (!file) return next()
+        res.setHeader("Content-Type", "application/pdf")
+        fs.createReadStream(file).pipe(res)
+      })
+    },
+    generateBundle() {
+      for (const [fileName, file] of byName) {
+        this.emitFile({ type: "asset", fileName, source: fs.readFileSync(file) })
+      }
+    },
+  }
+}
 
 /**
  * GitHub Pages has no SPA rewrites. It serves 404.html for any path that

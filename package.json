@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --mode gensler",
+    "dev:gensler": "vite --mode gensler",
     "preview": "vite preview",
     "format": "oxfmt",
     "typecheck": "tsc --noEmit"

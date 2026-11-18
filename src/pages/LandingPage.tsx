@@ -2,14 +2,15 @@ import { Link, Navigate, useLocation } from "react-router"
 import headshot from "../assets/profile-headshot.jpg?w=180;360;540;720&format=webp&quality=82&as=img"
 import { siteData } from "../data"
 import { HOME_PATH } from "../paths"
+import { IS_GENSLER } from "../variant"
 
 /**
  * The front door: a short, Linktree-style chooser between the portfolio,
- * LinkedIn, and the resume.
+ * LinkedIn, and the resume (plus the cover letter in the Gensler build).
  */
 export function LandingPage() {
   const { hash } = useLocation()
-  const { person, landing, resume } = siteData
+  const { person, landing, resume, coverLetter } = siteData
 
   // Old links like /#about or /#experience/… still reach the right place.
   if (hash) return <Navigate to={{ pathname: HOME_PATH, hash }} replace />
@@ -76,6 +77,23 @@ export function LandingPage() {
             </span>
             <span className="sr-only">({landing.newTab})</span>
           </a>
+          {IS_GENSLER && (
+            <a
+              className="landing-link"
+              href={coverLetter.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="landing-link-text">
+                <strong>{coverLetter.label}</strong>
+                <span>{landing.coverLetter.note}</span>
+              </span>
+              <span className="landing-link-arrow" aria-hidden="true">
+                ↗
+              </span>
+              <span className="sr-only">({landing.newTab})</span>
+            </a>
+          )}
         </nav>
       </div>
     </main>

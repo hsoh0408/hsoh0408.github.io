@@ -1,5 +1,6 @@
 import { Link } from "react-router"
 import { siteData } from "../data"
+import { IS_GENSLER } from "../variant"
 
 export function ResumeLink({ className = "" }: { className?: string }) {
   return (
@@ -12,6 +13,31 @@ export function ResumeLink({ className = "" }: { className?: string }) {
     >
       {siteData.resume.label}
     </a>
+  )
+}
+
+function CoverLetterLink() {
+  return (
+    <a
+      className="button-secondary"
+      href={siteData.coverLetter.href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={siteData.coverLetter.ariaLabel}
+    >
+      {siteData.coverLetter.label}
+    </a>
+  )
+}
+
+/** Resume button, plus the cover letter in the Gensler build. */
+export function DocumentLinks({ className = "" }: { className?: string }) {
+  if (!IS_GENSLER) return <ResumeLink className={className} />
+  return (
+    <span className="document-links">
+      <ResumeLink className={className} />
+      <CoverLetterLink />
+    </span>
   )
 }
 

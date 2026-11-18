@@ -145,12 +145,18 @@ export const siteData = {
     },
     linkedin: { note: "Career history and updates" },
     resume: { note: "One-page PDF" },
+    coverLetter: { note: "Gensler · Winter Intern, San Francisco" },
     newTab: "opens in a new tab",
   },
   resume: {
     label: "Resume",
     href: asset("Hazel-Oh-Resume.pdf"),
     ariaLabel: "Open Hazel Oh’s resume in a new tab",
+  },
+  coverLetter: {
+    label: "Cover Letter",
+    href: asset("Gensler_CoverLetter.pdf"),
+    ariaLabel: "Open Hazel Oh’s cover letter for Gensler in a new tab",
   },
   navigation: {
     homeLabel: "Home",
